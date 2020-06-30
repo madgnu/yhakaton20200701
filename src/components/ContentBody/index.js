@@ -10,7 +10,6 @@ export default class ContentBody extends Component {
 
   render() {
     const content = this.props.content;
-    console.log(content);
     const chields = content.map((el, i) => parser `<${ContentElement} key=${i} data=${el} />`);
     return parser `
       <main className="ContentBody">

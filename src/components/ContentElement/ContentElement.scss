@@ -1,2 +1,7 @@
-@import './title';
-@import './paragraph';
+@import './__content';
+@import './_controlBar';
+
+.ContentElement {
+    position: relative;
+    margin: 0;
+}

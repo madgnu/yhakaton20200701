@@ -11,7 +11,7 @@ export default class ContentHeader extends Component {
   render() {
     const data = this.props.content;
     return parser `
-      <header className="ContentHeader">
+      <header className="Content__header ContentHeader">
         <img className="ContentHeader__logo" src="${data.logo.url}" />
         <h1 className="ContentHeader__title">${data.title}</h1>
       </header>

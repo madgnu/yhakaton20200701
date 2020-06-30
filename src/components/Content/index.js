@@ -12,6 +12,7 @@ export default class Content extends Component {
   }
 
   render() {
+    document.title = this.props.page.header.title;
     return parser `
       <div className="Root__content Content">
         <${ContentHeader} content=${this.props.page.header} />

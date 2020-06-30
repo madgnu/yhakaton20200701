@@ -1,0 +1,13 @@
+.ContentElement__controlBar {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  left: -80px;
+  top: 3px;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.ContentElement:hover .ContentElement__controlBar {
+  opacity: 1;
+}

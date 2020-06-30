@@ -1,0 +1,24 @@
+.ContentElement__content {
+    margin: 0;
+}
+
+.ContentElement__content_paragraph {
+  margin-bottom: 24px;
+  font: {
+      weight: normal;
+      size: 14px;
+  }
+  line-height: 24px;
+}
+
+.ContentElement__content_title {
+  margin: {
+      top: 36px;
+      bottom: 30px;
+  }
+  font: {
+      weight: bold;
+      size: 30px;
+  }
+  line-height: 36px;
+}
