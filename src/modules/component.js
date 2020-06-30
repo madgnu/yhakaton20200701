@@ -9,28 +9,21 @@ function patch(vdom, node, parent = node.parentNode) {
     return node.textContent !== vdom ? replace(render(vdom, parent)) : node;
   } else if (typeof vdom === "object" && node instanceof Text) {
     return replace(render(vdom, parent));
-  } else if (
-    typeof vdom === "object" &&
-    vdom.type.toUpperCase() !== node.nodeName
-  ) {
+  } else if (typeof vdom === "object" && vdom.type.toUpperCase() !== node.nodeName) {
     return replace(render(vdom, parent));
-  } else if (
-    typeof vdom === "object" &&
-    vdom.type.toUpperCase() === node.nodeName
-  ) {
+  } else if (typeof vdom === "object" && vdom.type.toUpperCase() === node.nodeName) {
     const activeNode = document.activeElement;
     const keyChields = {};
-    node.childNodes.forEach(
-      (el, i) => (keyChields[`${el.__key || `__DUMMY_KEY__${i}`}`] = el)
-    );
+    node.childNodes.forEach((el, i) => (keyChields[`${el.__key || `__DUMMY_KEY__${i}`}`] = el));
     vdom.children.forEach((el, i) => {
       const key = (el.props && el.props.key) || `__DUMMY_KEY__${i}`;
-      node.appendChild(
-        keyChields[key] ? patch(el, keyChields[key]) : render(el, node)
-      );
+      node.appendChild(keyChields[key] ? patch(el, keyChields[key]) : render(el, node));
       delete keyChields[key];
     });
-    for (let k in keyChields) keyChields[k].remove();
+    for (let k in keyChields) {
+      if (keyChields[k].__instance) keyChields[k].__instance.componentWillUnmount();
+      keyChields[k].remove()
+    };
 
     const vdomPropsDiff = { ...vdom.props };
 
@@ -39,12 +32,7 @@ function patch(vdom, node, parent = node.parentNode) {
       if (node.__props[propName] === vdomPropsDiff[propName]) {
         delete vdomPropsDiff[propName];
         continue;
-      } else if (
-        typeof node.__props[propName] === "object" &&
-        typeof (vdomPropsDiff[propName] === "object") &&
-        JSON.stringify(node.__props[propName]) ===
-          JSON.stringify(vdomPropsDiff[propName])
-      ) {
+      } else if (typeof node.__props[propName] === "object" && typeof (vdomPropsDiff[propName] === "object") && JSON.stringify(node.__props[propName]) === JSON.stringify(vdomPropsDiff[propName])) {
         delete vdomPropsDiff[propName];
         continue;
       }
@@ -94,14 +82,27 @@ class Component {
     if (this.__node) {
       const newState = Object.assign({}, this.state, nextState);
       const oldState = this.state;
-      this.componentWillUpdate(this.props, nextState);
-      this.state = newState;
-      patch(this.render(), this.__node);
-      this.componentDidUpdate(this.props, oldState);
+      const willUpdate = this.shouldComponentUpdate(nextState);
+      if (willUpdate) {
+        this.componentWillUpdate(this.props, nextState);
+        this.state = newState;
+        patch(this.render(), this.__node);
+        this.componentDidUpdate(this.props, oldState);
+      } else {
+        this.state = newState;
+      }
     }
   }
 
+  shouldComponentUpdate(nextState) {
+    return nextState != this.state;
+  }
+
   componentDidMount() {
+    return undefined;
+  }
+
+  componentWillUnmount() {
     return undefined;
   }
 

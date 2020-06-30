@@ -15,8 +15,8 @@ export default class Content extends Component {
     document.title = this.props.page.header.title;
     return parser `
       <div className="Root__content Content">
-        <${ContentHeader} content=${this.props.page.header} />
-        <${ContentBody} content=${this.props.page.body} />
+        <${ContentHeader} store=${this.props.store} />
+        <${ContentBody} store=${this.props.store} content=${this.props.page.body} />
       </div>
     `;
   }
