@@ -13,9 +13,9 @@ export default class ContentBody extends Component {
     console.log(content);
     const chields = content.map((el, i) => parser `<${ContentElement} key=${i} data=${el} />`);
     return parser `
-      <section>
+      <main className="ContentBody">
         ${chields}
-      </section>
+      </main>
     `;
   }
 }

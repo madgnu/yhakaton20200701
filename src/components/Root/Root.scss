@@ -1,0 +1,11 @@
+@import'./__content';
+
+@import '../../vendor/inter/inter.css';
+
+.Root {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  min-height: 100vh;
+}
