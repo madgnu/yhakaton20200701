@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/madgnu/sprint11.git"
+    "url": "git+https://gitlab.com/madgnu/yap-hakaton-summer200630.git"
   },
   "author": "madgnu (Васильев Михаил),  LekaRok (Полина Задорожная)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/madgnu/sprint11/issues"
+    "url": "https://gitlab.com/madgnu/yap-hakaton-summer200630/issues"
   },
-  "homepage": "https://github.com/madgnu/sprint11#readme",
+  "homepage": "https://gitlab.com/madgnu/yap-hakaton-summer200630#readme",
   "devDependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
