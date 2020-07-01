@@ -16,7 +16,7 @@ export default class Content extends Component {
     return parser `
       <div className="Root__content Content">
         <${ContentHeader} store=${this.props.store} />
-        <${ContentBody} store=${this.props.store} content=${this.props.page.body} />
+        <${ContentBody} store=${this.props.store} />
       </div>
     `;
   }

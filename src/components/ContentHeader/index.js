@@ -27,11 +27,7 @@ export default class ContentHeader extends Component {
   }
 
   componentDidMount() {
-    this._storeUnsub = this.props.store.subscribe(() => this.setState({...this.state, headerData: this.props.store.getState().page.header }));
-  }
-
-  shouldComponentUpdate(nextState) {
-    return nextState.headerData != this.state.headerData;
+    this._storeUnsub = this.props.store.subscribe((newStoreState) => (this.state.headerData != newStoreState.header) && this.setState({...this.state, headerData: newStoreState.page.header }));
   }
 
   componentWillUnmount() {

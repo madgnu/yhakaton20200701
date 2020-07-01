@@ -15,6 +15,9 @@ function reducer(state, action) {
   console.log(action);
   switch (action.type) {
     case 'HEADER_MODIFY': return { ...state, page: { ...state.page, header: action.payload } };
+    case 'SECTION_MODIFY':
+      const arrayPos = state.page.body.find((el) => el.id == action.payload.id);
+      return { ... state, page: { ...state.page, body: state.page.body.splice(arrayPos, 1, action.payload) } };
     default: return state;
   }
 }
