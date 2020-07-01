@@ -1,12 +1,11 @@
 .ContentElement__dropzone {
     height: 100%;
     width: 100%;
+    opacity: 0;
+    transition: opacity .3s ease;
 }
 
-.ContentElement__dropzone[data-upper="upper"] {
-  background-color: red;
-}
-
-.ContentElement__dropzone[data-upper="upper"] {
-  background-color: green;
+.ContentElement__dropzone:hover {
+  background-color: cyan;
+  opacity: 0.05;
 }

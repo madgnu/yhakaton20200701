@@ -46,8 +46,10 @@ function reducer(state, action) {
       return { ... state, page: { ...state.page, body: newElemArray } };
     }
     case 'SECTION_DRAG': {
-      console.log(action.payload);
-      return { ... state, movingSectionId: action.payload }
+      return { ... state, movingSectionId: action.payload };
+    }
+    case 'SECTION_DRAG_CANCEL': {
+      return { ... state, movingSectionId: false };
     }
     case 'SECTION_MOVE': {
       const section = state.page.body.find((el) => el.id == state.movingSectionId)

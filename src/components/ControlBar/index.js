@@ -38,7 +38,7 @@ export default class ControlBar extends Component {
       const insertType = (target.dataset.part == 'upper') ? 'before' : 'after';
       const insertSectionId = target.dataset.id;
       this.props.store.dispatch({ type: 'SECTION_MOVE', payload: { target: insertSectionId, type: insertType } })
-    }
+    } else this.props.store.dispatch({ type: 'SECTION_DRAG_CANCEL'});
   }
 
   render() {
