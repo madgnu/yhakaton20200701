@@ -1,0 +1,11 @@
+@import './_input';
+@import './_button';
+
+.Popup {
+    position: absolute;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 30px;
+    background-color: rgb(242, 242, 242);
+    border-radius: 2px;
+}

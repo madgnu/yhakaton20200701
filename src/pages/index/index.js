@@ -8,7 +8,8 @@ import '../../components/Root';
 import defaultPage from '../../data/default';
 
 const initialState = {
-  page: JSON.parse(localStorage.getItem('store'))
+  page: JSON.parse(localStorage.getItem('store')),
+  popupOpened: false
 };
 if (!initialState.page) initialState.page = defaultPage;
 
@@ -31,6 +32,7 @@ const localStorageMiddleware = (store) => (next) => (action) => {
 function reducer(state, action) {
   switch (action.type) {
     case 'HEADER_MODIFY': return { ...state, page: { ...state.page, header: action.payload } };
+    case 'POPUP_TOGGLE': return { ...state, popupOpened: !state.popupOpened };
     case 'SECTION_ADD': {
       const arrayPos = state.page.body.findIndex((el) => el.id == action.payload.after);
       const newElemArray = [...state.page.body];
