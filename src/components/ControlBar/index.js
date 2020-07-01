@@ -32,7 +32,6 @@ export default class ControlBar extends Component {
     document.removeEventListener('mouseup', this._handleDragEnd);
 
     const target = event.target;
-    console.log(event.target);
     if (target.classList.contains('ContentElement__dropzone')) {
       event.stopPropagation();
       const insertType = (target.dataset.part == 'upper') ? 'before' : 'after';
