@@ -64,7 +64,12 @@ function reducer(state, action) {
   }
 }
 
-const store = applyMiddleware(createStore(reducer, initialState), localStorageMiddleware, loggerMiddleware);
+let store = null;
+if (NODE_ENV === 'development') {
+  store = applyMiddleware(createStore(reducer, initialState), localStorageMiddleware, loggerMiddleware);
+} else {
+  store = applyMiddleware(createStore(reducer, initialState), localStorageMiddleware);
+}
 
 
 (() => {
