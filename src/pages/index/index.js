@@ -7,11 +7,10 @@ import '../../components/Root';
 
 import defaultPage from '../../data/default';
 
-let initialState = JSON.parse(localStorage.getItem('store'));
-console.log(initialState);
-if (!initialState) initialState = {
-  page: defaultPage
-}
+const initialState = {
+  page: JSON.parse(localStorage.getItem('store'))
+};
+if (!initialState.page) initialState.page = defaultPage;
 
 const loggerMiddleware = (store) => (next) => (action) => {
   const oldState = store.getState();
@@ -25,7 +24,7 @@ const loggerMiddleware = (store) => (next) => (action) => {
 
 const localStorageMiddleware = (store) => (next) => (action) => {
   const newState = next(action);
-  localStorage.setItem('store', JSON.stringify(newState));
+  localStorage.setItem('store', JSON.stringify(newState.page));
   return newState;
 }
 
@@ -45,6 +44,17 @@ function reducer(state, action) {
       const newElemArray = [...state.page.body];
       newElemArray.splice(arrayPos, 1, action.payload);
       return { ... state, page: { ...state.page, body: newElemArray } };
+    }
+    case 'SECTION_DRAG': {
+      console.log(action.payload);
+      return { ... state, movingSectionId: action.payload }
+    }
+    case 'SECTION_MOVE': {
+      const section = state.page.body.find((el) => el.id == state.movingSectionId)
+      const newElemArray = state.page.body.filter((el) => el.id != state.movingSectionId);
+      const arrayPos = newElemArray.findIndex((el) => el.id == action.payload.target);
+      newElemArray.splice(arrayPos + (action.payload.type == 'after'), 0, section);
+      return { ... state, movingSectionId: false, page: { ...state.page, body: newElemArray } };
     }
     default: return state;
   }

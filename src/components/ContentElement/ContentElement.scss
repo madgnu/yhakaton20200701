@@ -1,7 +1,12 @@
 @import './__content';
 @import './_controlBar';
+@import './_wrapper';
+@import './_dropframe';
+@import './_dropzone';
 
 .ContentElement {
     position: relative;
     margin: 0;
+    position: relative;
+    z-index: 3;
 }

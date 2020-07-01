@@ -1,0 +1,12 @@
+.ContentElement__dropzone {
+    height: 100%;
+    width: 100%;
+}
+
+.ContentElement__dropzone[data-upper="upper"] {
+  background-color: red;
+}
+
+.ContentElement__dropzone[data-upper="upper"] {
+  background-color: green;
+}

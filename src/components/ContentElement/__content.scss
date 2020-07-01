@@ -1,9 +1,10 @@
 .ContentElement__content {
     margin: 0;
+    position: relative;
 }
 
 .ContentElement__content_paragraph {
-  margin-bottom: 24px;
+  padding-bottom: 24px;
   font: {
       weight: normal;
       size: 14px;
@@ -13,10 +14,7 @@
 }
 
 .ContentElement__content_title {
-  margin: {
-      top: 36px;
-      bottom: 30px;
-  }
+  padding-bottom: 30px;
   font: {
       weight: bold;
       size: 30px;

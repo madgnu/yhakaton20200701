@@ -5,7 +5,7 @@ import Component from '../../modules/component';
 
 import ControlBar from '../ControlBar';
 
-const modifClassName = {
+const tagType = {
   'paragraph': 'p',
   'title': 'h2'
 }
@@ -32,10 +32,26 @@ export default class ContentElement extends Component {
 
   render() {
     const data = this.state.content;
+    const movingSectionId = this.state.movingSectionId;
+    if (movingSectionId && movingSectionId !== this.props.key) {
+      return parser `
+        <div className="ContentElement">
+          <div className="ContentElement__wrapper">
+              <${tagType[data.type]} className=${`ContentElement__content ContentElement__content_${data.type}`} contenteditable="true" onFocusout=${this.handleContentChange}>${data.content}</${tagType[data.type]}>
+          </div>
+          <div className="ContentElement__dropframe">
+            <div className="ContentElement__dropzone" data-id=${this.props.key} data-part="upper"></div>
+            <div className="ContentElement__dropzone" data-id=${this.props.key} data-part="lower"></div>
+          </div>
+        </div>
+      `;
+    }
     return parser `
       <div className="ContentElement">
-        <${modifClassName[data.type]} className=${`ContentElement__content ContentElement__content_${data.type}`} contenteditable="true" onFocusout=${this.handleContentChange}>${data.content}</${modifClassName[data.type]}>
-        <${ControlBar} store=${this.props.store} sectionId=${this.props.key} />
+        <div className="ContentElement__wrapper">
+            <${tagType[data.type]} className=${`ContentElement__content ContentElement__content_${data.type}`} contenteditable="true" onFocusout=${this.handleContentChange}>${data.content}</${tagType[data.type]}>
+            <${ControlBar} store=${this.props.store} sectionId=${this.props.key} />
+        </div>
       </div>
     `;
   }
@@ -43,7 +59,7 @@ export default class ContentElement extends Component {
   componentDidMount() {
     this._storeUnsub = this.props.store.subscribe((newStoreState) => {
       const newContent = this._getContentFromStore(newStoreState);
-      if (newContent && newContent !== this.state.content) this.setState({ content: newContent });
+      if ((newContent && newContent !== this.state.content) || (newStoreState.movingSectionId != this.state.movingSectionId)) this.setState({ content: newContent, movingSectionId: newStoreState.movingSectionId });
     });
   }
 
