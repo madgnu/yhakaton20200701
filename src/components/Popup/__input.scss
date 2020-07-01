@@ -1,5 +1,14 @@
 .Popup__input {
-    border: none;
+    border: solid rgb(242, 242, 242) 1px;
     margin: 0 0 0 5px;
     height: 15px;
+    outline: none;
+}
+
+.Popup__input:focus {
+    border: solid rgb(216, 216, 216) 1px;
+}
+
+.Popup__input:invalid {
+    border: solid red 1px;
 }

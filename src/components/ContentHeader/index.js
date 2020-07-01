@@ -22,6 +22,8 @@ export default class ContentHeader extends Component {
 
   _handleLogoChange(event) {
     event.preventDefault();
+    const urlInput = document.forms.logoChange.elements[0];
+    if (!urlInput.checkValidity()) return;
     const newUrl = document.querySelector('#newLogo').value;
     this.props.store.dispatch({ type: 'HEADER_MODIFY', payload: { ...this.state.headerData, logo: { ...this.state.headerData.logo, url: newUrl } } });
   }
@@ -39,8 +41,10 @@ export default class ContentHeader extends Component {
           <div className="ContentHeader__wrapLogo">
             <img className="ContentHeader__logo" src="${data.logo.url}" onClick=${this._handleLogoClick} />
             <div className="ContentHeader__logoPopup Popup">
-              <input className="Popup__input Input" id="newLogo" type="url" placeholder="URL картинки" value=${data.logo.url}/>
-              <button className="Popup__button Button" type="submit" onClick=${this._handleLogoChange}>Сохранить</button>
+              <form name="logoChange" onClick=${this._handleLogoChange}>
+                <input className="Popup__input Input" id="newLogo" type="url" placeholder="URL картинки" value=${data.logo.url} required="true" />
+                <button className="Popup__button Button" type="submit">Сохранить</button>
+              </form>
             </div>
           </div>
           <h1 className="ContentHeader__title" contenteditable="true" onFocusout=${this._handleTitleChange}>${data.title}</h1>
