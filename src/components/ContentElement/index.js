@@ -6,8 +6,8 @@ import Component from '../../modules/component';
 import ControlBar from '../ControlBar';
 
 const modifClassName = {
-  p: 'paragraph',
-  h2: 'title'
+  'paragraph': 'p',
+  'title': 'h2'
 }
 
 export default class ContentElement extends Component {
@@ -26,25 +26,25 @@ export default class ContentElement extends Component {
     return store.page.body.find((el) => el.id == this.props.key);
   }
 
-  handleContentChange() {
-    this.props.store.dispatch({ action: 'SECTION_MODIFY', payload: this.state.content });
+  handleContentChange(event) {
+    this.props.store.dispatch({ type: 'SECTION_MODIFY', payload: { ...this.state.content, content: event.target.textContent } });
   }
 
   render() {
     const data = this.state.content;
     return parser `
       <div className="ContentElement">
-        <${data.type} className=${`ContentElement__content ContentElement__content_${modifClassName[data.type]}`} contenteditable="true" onFocusout=${this.handleContentChange}>${data.content}</${data.type}>
-        <${ControlBar} />
+        <${modifClassName[data.type]} className=${`ContentElement__content ContentElement__content_${data.type}`} contenteditable="true" onFocusout=${this.handleContentChange}>${data.content}</${modifClassName[data.type]}>
+        <${ControlBar} store=${this.props.store} sectionId=${this.props.key} />
       </div>
     `;
   }
 
   componentDidMount() {
-    this._storeUnsub = (newStoreState) => {
+    this._storeUnsub = this.props.store.subscribe((newStoreState) => {
       const newContent = this._getContentFromStore(newStoreState);
-      if (newContent !== this.state.content) this.setState({ ...this.state, content: newContent });
-    }
+      if (newContent && newContent !== this.state.content) this.setState({ content: newContent });
+    });
   }
 
   componentWillUnmount() {

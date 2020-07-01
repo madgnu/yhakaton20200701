@@ -22,7 +22,7 @@ export default class ContentBody extends Component {
   }
 
   componentDidMount() {
-    this._storeUnsub = (newStoreState) => this.state.elements != newStoreState.body && this.setState({...this.state, elements: newStoreState.body});
+    this._storeUnsub = this.props.store.subscribe((newStoreState) => (this.state.elements != newStoreState.page.body) && this.setState({ elements: newStoreState.page.body }));
   }
 
   componentWillUnmount() {
