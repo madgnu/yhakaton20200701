@@ -41,7 +41,6 @@ export default class ContentElement extends Component {
   render() {
     const data = this.state.content;
     const movingSectionId = this.state.movingSectionId;
-    console.log(data.content, !data.content);
     if (movingSectionId && movingSectionId !== this.props.key) {
       return parser `
         <div className="ContentElement">
