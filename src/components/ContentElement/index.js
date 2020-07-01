@@ -16,6 +16,7 @@ export default class ContentElement extends Component {
 
     this.handleContentChange = this.handleContentChange.bind(this);
     this._getContentFromStore = this._getContentFromStore.bind(this);
+    this._handleFocus = this._handleFocus.bind(this);
 
     this.state = {
       content: this._getContentFromStore(this.props.store.getState()),
@@ -30,14 +31,22 @@ export default class ContentElement extends Component {
     this.props.store.dispatch({ type: 'SECTION_MODIFY', payload: { ...this.state.content, content: event.target.textContent } });
   }
 
+  _handleFocus() {
+    if (!this.state.content.content) {
+      const sectionField = document.querySelector(`#section${this.props.key}`);
+      sectionField.textContent = '';
+    }
+  }
+
   render() {
     const data = this.state.content;
     const movingSectionId = this.state.movingSectionId;
+    console.log(data.content, !data.content);
     if (movingSectionId && movingSectionId !== this.props.key) {
       return parser `
         <div className="ContentElement">
           <div className="ContentElement__wrapper">
-              <${tagType[data.type]} className=${`ContentElement__content ContentElement__content_${data.type}`} contenteditable="true" onFocusout=${this.handleContentChange}>${data.content}</${tagType[data.type]}>
+              <${tagType[data.type]} id=${'section'+this.props.key} className=${`ContentElement__content ContentElement__content_${data.type} ${(!data.content) ? 'ContentElement__content_empty' : ''}`} contenteditable="true" onFocusOut=${this.handleContentChange} >${data.content}</${tagType[data.type]}>
           </div>
           <div className="ContentElement__dropframe">
             <div className="ContentElement__dropzone" data-id=${this.props.key} data-part="upper"></div>
@@ -49,7 +58,7 @@ export default class ContentElement extends Component {
     return parser `
       <div className="ContentElement">
         <div className="ContentElement__wrapper">
-            <${tagType[data.type]} className=${`ContentElement__content ContentElement__content_${data.type}`} contenteditable="true" onFocusout=${this.handleContentChange}>${data.content}</${tagType[data.type]}>
+            <${tagType[data.type]} id=${'section'+this.props.key} className=${`ContentElement__content ContentElement__content_${data.type} ${(!data.content) ? 'ContentElement__content_empty' : ''}`} contenteditable="true" onFocusout=${this.handleContentChange} onFocusIn=${this._handleFocus}>${(data.content) ? data.content : 'Введите текст'}</${tagType[data.type]}>
             <${ControlBar} store=${this.props.store} sectionId=${this.props.key} />
         </div>
       </div>

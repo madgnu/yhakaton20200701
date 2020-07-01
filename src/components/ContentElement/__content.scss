@@ -22,3 +22,11 @@
   line-height: 36px;
   outline: none;
 }
+
+.ContentElement__content_empty {
+  color: gray;
+}
+
+.ContentElement__content_empty:focus {
+  color: black;
+}
