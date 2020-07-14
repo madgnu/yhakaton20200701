@@ -21,8 +21,12 @@ export default class ContentBody extends Component {
     `;
   }
 
+  shouldComponentUpdate(nextState) {
+    return this.state.elements.reduce((acc, el) => acc + el.id, '') != nextState.elements.reduce((acc, el) => acc + el.id, '');
+  }
+
   componentDidMount() {
-    this._storeUnsub = this.props.store.subscribe((newStoreState) => (this.state.elements != newStoreState.page.body) && this.setState({ elements: newStoreState.page.body }));
+    this._storeUnsub = this.props.store.subscribe((newStoreState) =>this.setState({ elements: newStoreState.page.body }));
   }
 
   componentWillUnmount() {

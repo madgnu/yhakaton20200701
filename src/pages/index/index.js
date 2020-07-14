@@ -32,15 +32,18 @@ const localStorageMiddleware = (store) => (next) => (action) => {
 function reducer(state, action) {
   switch (action.type) {
     case 'HEADER_MODIFY': return { ...state, page: { ...state.page, header: action.payload } };
-    case 'POPUP_TOGGLE': return { ...state, popupOpened: !state.popupOpened };
     case 'SECTION_ADD': {
       const arrayPos = state.page.body.findIndex((el) => el.id == action.payload.after);
       const newElemArray = [...state.page.body];
       newElemArray.splice(arrayPos + 1, 0, { id: Math.floor(Math.random() * 100000) + 'x' + Date.now(), type: action.payload.type, content: '' });
       return { ...state, page: { ...state.page, body: newElemArray } };
     }
-    case 'SECTION_REMOVE':
-      return { ...state, page: { ...state.page, body: state.page.body.filter((el) => el.id != action.payload) } }
+    case 'SECTION_REMOVE': {
+      const newBody = state.page.body.filter((el) => el.id != action.payload);
+      if (!newBody.length) newBody.push({ id: Math.floor(Math.random() * 100000) + 'x' + Date.now(), type: 'paragraph', content: '' });
+      return { ...state, page: { ...state.page, body: newBody } }
+    }
+
     case 'SECTION_MODIFY': {
       const arrayPos = state.page.body.findIndex((el) => el.id == action.payload.id);
       const newElemArray = [...state.page.body];

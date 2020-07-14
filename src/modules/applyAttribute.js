@@ -6,9 +6,11 @@ export default function (node, k, v) {
   } else if (k.startsWith("on")) {
     const eventType = k.slice(2).toLowerCase();
     node.__eventListeners = node.__eventListeners || {};
-    node.removeEventListener(eventType, node.__eventListeners[eventType]);
-    node.__eventListeners[eventType] = v;
-    node.addEventListener(eventType, v);
+    if (node.__eventListeners[eventType] !== v) {
+      node.removeEventListener(eventType, node.__eventListeners[eventType]);
+      node.__eventListeners[eventType] = v;
+      node.addEventListener(eventType, v);
+    }
   } else if (k === "key") {
     node.__key = v;
   } else if (k === "ref") {
